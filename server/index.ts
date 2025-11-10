@@ -71,11 +71,18 @@ app.use((req, res, next) => {
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
   const port = parseInt(process.env.PORT || '5000', 10);
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
+  
+  // Platform-specific server configuration
+  const isWindows = process.platform === 'win32';
+  const serverOptions = isWindows 
+    ? { port }  // Simplified options for Windows
+    : { 
+        port,
+        host: "0.0.0.0",
+        reusePort: true,
+      };
+      
+  server.listen(serverOptions, () => {
     log(`serving on port ${port}`);
   });
 })();
