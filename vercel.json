@@ -3,14 +3,7 @@
   "builds": [
     {
       "src": "server/vercel.ts",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "dist/**",
-          "attached_assets/**",
-          "server/**"
-        ]
-      }
+      "use": "@vercel/node"
     }
   ],
   "routes": [
