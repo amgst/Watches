@@ -11,10 +11,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Load watch data
-console.log("Loading watch data from CSV...");
-const watchData = loadWatchData();
-await storage.loadWatches(watchData);
-console.log(`Loaded ${watchData.length} watches into storage`);
+async function loadWatches() {
+  try {
+    console.log("Loading watch data from CSV...");
+    const watchData = loadWatchData();
+    await storage.loadWatches(watchData);
+    console.log(`Loaded ${watchData.length} watches into storage`);
+  } catch (error) {
+    console.error("Failed to load watch data:", error);
+  }
+}
+
+// Load data when module is imported
+loadWatches();
 
 // Register API routes
 registerApiRoutes(app);

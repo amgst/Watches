@@ -3,7 +3,13 @@
   "builds": [
     {
       "src": "server/vercel.ts",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "dist/**",
+          "attached_assets/**"
+        ]
+      }
     }
   ],
   "routes": [
@@ -15,5 +21,6 @@
       "src": "/(.*)",
       "dest": "/server/vercel.ts"
     }
-  ]
+  ],
+  "outputDirectory": "dist/public"
 }

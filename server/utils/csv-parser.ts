@@ -1,6 +1,11 @@
 import { readFileSync } from "fs";
-import { join } from "path";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
 import { InsertWatch } from "@shared/schema";
+
+// Get __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export function parseCSVData(csvPath: string): InsertWatch[] {
   const content = readFileSync(csvPath, { encoding: "utf-8" });
@@ -48,16 +53,22 @@ export function parseCSVData(csvPath: string): InsertWatch[] {
 }
 
 export function loadWatchData(): InsertWatch[] {
-  const csvPath = join(
-    process.cwd(),
-    "attached_assets",
-    "Pasted-Brand-Family-Name-Reference-Movement-Caliber-Movement-Functions-Limited-Case-Material-Glass-Back-Sha-1762758225904_1762758225905.txt"
-  );
+  // Try multiple possible paths for different environments
+  const possiblePaths = [
+    join(process.cwd(), "attached_assets", "Pasted-Brand-Family-Name-Reference-Movement-Caliber-Movement-Functions-Limited-Case-Material-Glass-Back-Sha-1762758225904_1762758225905.txt"),
+    join(__dirname, "..", "..", "attached_assets", "Pasted-Brand-Family-Name-Reference-Movement-Caliber-Movement-Functions-Limited-Case-Material-Glass-Back-Sha-1762758225904_1762758225905.txt"),
+    join(__dirname, "..", "attached_assets", "Pasted-Brand-Family-Name-Reference-Movement-Caliber-Movement-Functions-Limited-Case-Material-Glass-Back-Sha-1762758225904_1762758225905.txt"),
+  ];
 
-  try {
-    return parseCSVData(csvPath);
-  } catch (error) {
-    console.error("Error loading watch data:", error);
-    return [];
+  for (const csvPath of possiblePaths) {
+    try {
+      return parseCSVData(csvPath);
+    } catch (error: any) {
+      console.warn(`Could not load watch data from ${csvPath}:`, error.message || error);
+      continue;
+    }
   }
+
+  console.error("Error loading watch data: Could not find CSV file in any expected location");
+  return [];
 }
