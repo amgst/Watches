@@ -4,11 +4,11 @@ import { storage } from "./storage";
 import { loadWatchData } from "./utils/csv-parser";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  console.log("Loading watch data from CSV...");
-  const watchData = loadWatchData();
-  await storage.loadWatches(watchData);
-  console.log(`Loaded ${watchData.length} watches into storage`);
+  const httpServer = createServer(app);
+  return httpServer;
+}
 
+export function registerApiRoutes(app: Express) {
   app.get("/api/watches", async (_req, res) => {
     try {
       const watches = await storage.getAllWatches();
@@ -55,7 +55,4 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to fetch watch" });
     }
   });
-
-  const httpServer = createServer(app);
-  return httpServer;
 }
