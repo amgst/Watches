@@ -7,7 +7,8 @@
       "config": {
         "includeFiles": [
           "dist/**",
-          "attached_assets/**"
+          "attached_assets/**",
+          "server/**"
         ]
       }
     }
@@ -21,6 +22,5 @@
       "src": "/(.*)",
       "dest": "/server/vercel.ts"
     }
-  ],
-  "outputDirectory": "dist/public"
+  ]
 }
