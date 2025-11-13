@@ -96,12 +96,20 @@ export default function WatchDetail() {
           <div className="space-y-6" data-testid="image-watch">
             <Card className="overflow-hidden">
               <CardContent className="p-8 md:p-12">
-                <div className="aspect-[4/5] bg-gradient-to-br from-muted/30 to-muted/10 rounded-lg flex items-center justify-center">
-                  <div className="text-center text-muted-foreground">
-                    <Clock className="w-24 h-24 mx-auto mb-4 opacity-20" />
-                    <p className="text-sm uppercase tracking-widest">Product Image</p>
-                    <p className="text-xs mt-2">Professional photography</p>
-                  </div>
+                <div className="aspect-[4/5] bg-gradient-to-br from-muted/30 to-muted/10 rounded-lg flex items-center justify-center relative overflow-hidden">
+                  {watch.imageUrl ? (
+                    <img
+                      src={watch.imageUrl}
+                      alt={`${watch.brand} ${watch.name}`}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="text-center text-muted-foreground">
+                      <Clock className="w-24 h-24 mx-auto mb-4 opacity-20" />
+                      <p className="text-sm uppercase tracking-widest">Product Image</p>
+                      <p className="text-xs mt-2">Professional photography</p>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>

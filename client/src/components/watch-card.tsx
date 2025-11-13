@@ -14,7 +14,16 @@ export function WatchCard({ watch }: WatchCardProps) {
       <Card className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover-elevate overflow-hidden" data-testid={`card-watch-${watch.id}`}>
         <CardContent className="p-0">
           <div className="aspect-[4/5] bg-gradient-to-br from-muted/20 to-muted/5 flex items-center justify-center relative overflow-hidden">
-            <Clock className="w-20 h-20 text-muted-foreground/10 group-hover:scale-110 transition-transform duration-500" />
+            {watch.imageUrl ? (
+              <img
+                src={watch.imageUrl}
+                alt={`${watch.brand} ${watch.name}`}
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+              />
+            ) : (
+              <Clock className="w-20 h-20 text-muted-foreground/10 group-hover:scale-110 transition-transform duration-500" />
+            )}
             {watch.limited && watch.limited !== "No" && (
               <Badge
                 variant="secondary"

@@ -23,6 +23,7 @@ export const watches = pgTable("watches", {
   indexes: text("indexes"),
   hands: text("hands"),
   description: text("description"),
+  imageUrl: text("image_url"),
 });
 
 export const insertWatchSchema = createInsertSchema(watches).omit({

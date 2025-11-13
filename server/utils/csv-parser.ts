@@ -17,6 +17,10 @@ export function parseCSVData(csvPath: string): InsertWatch[] {
 
   const headers = lines[0].split(";");
   const watches: InsertWatch[] = [];
+  const imageHeaderIndex = headers.findIndex((h) => {
+    const key = h.trim().toLowerCase();
+    return key === "image_url" || key === "image" || key === "imageurl";
+  });
 
   for (let i = 1; i < lines.length; i++) {
     const values = lines[i].split(";");
@@ -44,6 +48,10 @@ export function parseCSVData(csvPath: string): InsertWatch[] {
       indexes: values[15] || null,
       hands: values[16] || null,
       description: values[17] || null,
+      imageUrl:
+        imageHeaderIndex >= 0 && values[imageHeaderIndex]
+          ? values[imageHeaderIndex]
+          : null,
     };
 
     watches.push(watch);

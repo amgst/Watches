@@ -50,6 +50,13 @@ The application will be available at http://localhost:5000
 
 Watch data is loaded from `attached_assets/Pasted-Brand-Family-Name-Reference-Movement-Caliber-Movement-Functions-Limited-Case-Material-Glass-Back-Sha-1762758225904_1762758225905.txt`
 
+## Adding Images
+
+- Place image files under `client/public/images/` (e.g., `client/public/images/patek-nautilus-5711.jpg`).
+- In the data source (CSV/text), add a column named `image_url` with the public path (e.g., `/images/patek-nautilus-5711.jpg`). If this column is present, the server will populate `imageUrl` for each watch.
+- If `image_url` is not provided, the UI will show a placeholder graphic.
+- During development, assets in `client/public` are served at the site root; in production they are bundled to `dist/public` and served by the Express server.
+
 ## Vercel Configuration
 
 The application includes specific configuration for Vercel deployment:
